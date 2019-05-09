@@ -3,12 +3,14 @@ import { graphql } from "react-apollo";
 import CurrentUserQuery from "../queries/CurrentUser";
 import { Link } from "react-router";
 import LogoutMutation from "../mutations/Logout";
+import { hashHistory } from "react-router";
 
 class Header extends Component {
   onLogoutClick() {
     this.props.mutate({
       refetchQueries: [{ query: CurrentUserQuery }]
     });
+    hashHistory.push('/');
   }
 
   renderButtons() {

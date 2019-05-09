@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AuthForm from "./AuthForm";
 import SignupMutation from "../mutations/Signup";
+import { hashHistory } from "react-router";
 import { graphql } from "react-apollo";
 import CurrentUserQuery from "../queries/CurrentUser";
 
@@ -12,6 +13,18 @@ class SignupForm extends Component {
     };
   }
 
+  // componentWillUpdate(nextProps, nextState) {
+  //   if (!this.props.data.user && nextProps.data.user) {
+  //     hashHistory.push('/dashboard');
+  //   }
+  // }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.data.user){
+      hashHistory.push('/dashboard');
+    }
+  }
+  
   submitHandler({ email, password }) {
     this.props
       .mutate({
@@ -34,4 +47,4 @@ class SignupForm extends Component {
   }
 }
 
-export default graphql(SignupMutation)(SignupForm);
+export default graphql(CurrentUserQuery)(graphql(SignupMutation)(SignupForm));
